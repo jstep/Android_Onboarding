@@ -1,5 +1,7 @@
 package com.jstephaniuk.onboarding;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,6 +28,20 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        // Get the shared preferences
+        SharedPreferences preferences =  getSharedPreferences("my_preferences", MODE_PRIVATE);
+
+// Check if onboarding_complete is false
+        if(!preferences.getBoolean("onboarding_complete",false)) {
+            // Start the onboarding Activity
+            Intent onboarding = new Intent(this, OnboardingActivity.class);
+            startActivity(onboarding);
+
+            // Close the main Activity
+            finish();
+            return;
+        }
     }
 
     @Override
